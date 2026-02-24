@@ -669,6 +669,157 @@
 
         .footer-links a:hover { color: var(--cream); }
 
+        /* ─── DEMO SPLASH ─────────────────────────────────────────── */
+        body.splash-open { overflow: hidden; }
+
+        #demo-splash {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--dark);
+            background-image: url("images/Screenshot 2026-02-23 at 15.18.14.png");
+            background-size: cover;
+            background-position: center;
+        }
+
+        #demo-splash::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(18, 13, 8, 0.90);
+        }
+
+        #demo-splash.exiting {
+            animation: splashExit 0.65s cubic-bezier(.4,0,.2,1) forwards;
+        }
+
+        @keyframes splashExit {
+            to { opacity: 0; transform: scale(1.025); }
+        }
+
+        .splash-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 580px;
+            padding: 2rem;
+            animation: heroFadeUp 1s cubic-bezier(.16,1,.3,1) 0.2s both;
+        }
+
+        .splash-tag {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: var(--amber);
+            border: 1px solid rgba(184,125,42,0.35);
+            padding: 0.35rem 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .splash-title {
+            font-family: var(--font-s);
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--cream);
+            margin-bottom: 2rem;
+        }
+
+        .splash-title em { font-style: italic; }
+
+        .splash-divider {
+            width: 36px;
+            height: 1px;
+            background: rgba(184,125,42,0.45);
+            margin: 0 auto 2rem;
+        }
+
+        .splash-body {
+            font-size: 0.9rem;
+            line-height: 1.9;
+            color: rgba(240,232,212,0.55);
+            margin-bottom: 2.75rem;
+        }
+
+        .splash-body strong {
+            color: rgba(240,232,212,0.88);
+            font-weight: 400;
+        }
+
+        .splash-cta {
+            display: inline-block;
+            font-family: var(--font-b);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--dark);
+            background: var(--amber);
+            border: none;
+            padding: 1rem 2.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 2.5rem;
+        }
+
+        .splash-cta:hover { background: #c98e3a; }
+
+        .splash-note {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(240,232,212,0.2);
+        }
+
+        .splash-note span { color: rgba(240,232,212,0.38); }
+
+        /* ─── DEMO RIBBON ──────────────────────────────────────────── */
+        .demo-ribbon {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            background: rgba(18,13,8,0.93);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(184,125,42,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem 3rem;
+            font-size: 0.63rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(240,232,212,0.32);
+            transition: opacity 0.3s;
+        }
+
+        .demo-ribbon strong {
+            color: rgba(240,232,212,0.58);
+            font-weight: 400;
+        }
+
+        .ribbon-close {
+            position: absolute;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: rgba(240,232,212,0.22);
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1;
+            padding: 0.3rem 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .ribbon-close:hover { color: rgba(240,232,212,0.6); }
+
         /* ─── RESPONSIVE ──────────────────────────────────────────── */
         @media (max-width: 960px) {
             nav { padding: 1rem 1.5rem; }
@@ -703,7 +854,23 @@
         }
     </style>
 </head>
-<body>
+<body class="splash-open">
+
+<!-- ─── DEMO SPLASH ──────────────────────────────────────────────────── -->
+<div id="demo-splash">
+    <div class="splash-inner">
+        <span class="splash-tag">Demo &nbsp;·&nbsp; Безплатно</span>
+        <h2 class="splash-title">Създадохме нещо<br><em>специално за вас.</em></h2>
+        <div class="splash-divider"></div>
+        <p class="splash-body">
+            Харесваме <strong>Fake French</strong> и искахме да ви покажем<br> 
+            как може да изглежда вашият уебсайт.<br><br>
+            Демото е безплатно и е изготвено с единствената цел да добиете представа за възможностите.
+        </p>
+        <button class="splash-cta" id="splash-enter">Виж демото &nbsp;&rarr;</button>
+        <p class="splash-note">Създадено с уважение &nbsp;·&nbsp; <span>ZT Code Craft</span></p>
+    </div>
+</div>
 
 <!-- ─── NAV ─────────────────────────────────────────────────────────── -->
 <nav>
@@ -906,14 +1073,40 @@
     </div>
 </footer>
 
+<!-- ─── DEMO RIBBON ───────────────────────────────────────────────────── -->
+<div class="demo-ribbon">
+    <span>Демо уебсайт &nbsp;·&nbsp; Създаден специално за <strong>Fake French</strong> &nbsp;·&nbsp; Не се използва за търговски цели</span>
+    <button class="ribbon-close" aria-label="Затвори">✕</button>
+</div>
+
 <script>
     (function () {
+        // Nav scroll state
         const nav = document.querySelector('nav');
-        function update() {
+        function updateNav() {
             nav.classList.toggle('scrolled', window.scrollY > 60);
         }
-        window.addEventListener('scroll', update, { passive: true });
-        update();
+        window.addEventListener('scroll', updateNav, { passive: true });
+        updateNav();
+
+        // Splash screen
+        const splash = document.getElementById('demo-splash');
+        const splashBtn = document.getElementById('splash-enter');
+        splashBtn.addEventListener('click', function () {
+            splash.classList.add('exiting');
+            splash.addEventListener('animationend', function () {
+                splash.remove();
+                document.body.classList.remove('splash-open');
+            }, { once: true });
+        });
+
+        // Ribbon close
+        const ribbon = document.querySelector('.demo-ribbon');
+        const ribbonClose = document.querySelector('.ribbon-close');
+        ribbonClose.addEventListener('click', function () {
+            ribbon.style.opacity = '0';
+            setTimeout(function () { ribbon.remove(); }, 300);
+        });
     })();
 </script>
 
