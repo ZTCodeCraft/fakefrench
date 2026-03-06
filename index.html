@@ -820,10 +820,68 @@
 
         .ribbon-close:hover { color: rgba(240,232,212,0.6); }
 
+        /* ─── MOBILE NAV TOGGLE ───────────────────────────────────── */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: rgba(240,232,212,0.82);
+            transition: all 0.25s;
+        }
+        nav.scrolled .nav-toggle span { background: var(--dark); }
+        .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
         /* ─── RESPONSIVE ──────────────────────────────────────────── */
         @media (max-width: 960px) {
             nav { padding: 1rem 1.5rem; }
-            .nav-links { display: none; }
+            .nav-toggle { display: flex; position: relative; z-index: 100; }
+            .nav-reserve { display: none; }
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                position: absolute;
+                top: 100%;
+                left: 0; right: 0;
+                background: rgba(18,13,8,0.97);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-bottom: 1px solid rgba(240,232,212,0.08);
+                opacity: 0;
+                transform: translateY(-6px);
+                pointer-events: none;
+                transition: opacity 0.2s, transform 0.2s;
+                z-index: 99;
+            }
+            .nav-links.open {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: all;
+            }
+            .nav-links li { list-style: none; border-bottom: 1px solid rgba(240,232,212,0.06); }
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links a {
+                display: block;
+                font-size: 0.7rem;
+                letter-spacing: 0.2em;
+                padding: 1rem 1.5rem;
+                color: rgba(240,232,212,0.75);
+            }
+            .nav-links a:hover { color: var(--amber); }
+            /* prevent scrolled-state overrides from darkening the dropdown */
+            nav.scrolled .nav-links a { color: rgba(240,232,212,0.75); }
+            nav.scrolled .nav-links a:hover { color: var(--amber); }
 
             .hero-logo { width: 200px; }
 
@@ -882,6 +940,7 @@
         <li><a href="#reserve">Reserve</a></li>
     </ul>
     <a class="nav-reserve" href="tel:+359895405555">Reserve a Table</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- ─── HERO ─────────────────────────────────────────────────────────── -->
@@ -1078,6 +1137,31 @@
     <span>Демо уебсайт &nbsp;·&nbsp; Създаден специално за <strong>Fake French</strong> &nbsp;·&nbsp; Не се използва за търговски цели</span>
     <button class="ribbon-close" aria-label="Затвори">✕</button>
 </div>
+
+<script>
+    // Mobile nav
+    (function () {
+        var toggle = document.querySelector('.nav-toggle');
+        var links = document.querySelector('.nav-links');
+        function closeNav() {
+            links.classList.remove('open');
+            toggle.classList.remove('active');
+        }
+        toggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            links.classList.toggle('open');
+            toggle.classList.toggle('active');
+        });
+        links.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeNav);
+        });
+        document.addEventListener('click', function (e) {
+            if (links.classList.contains('open') && !links.contains(e.target)) {
+                closeNav();
+            }
+        });
+    })();
+</script>
 
 <script>
     (function () {
